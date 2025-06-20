@@ -4,7 +4,6 @@
 
     <title>Untitled</title>
 
-    <link rel="canonical" href="https://codepen.io/junghunbae/pen/bNNypGM" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
@@ -30,16 +29,23 @@
       }
 
       .sticky-wrapper {
-        position: sticky;
+        position: relative;
         bottom: 10px;
         width: 100%;
         height: 60px; /* 높이 설정 */
+      }
+      .sticky-wrapper.sticky-on {
+        position: sticky;
+      }
+
+      .sticky-on .sticky-button {
+        background: #007bff;
       }
 
       .sticky-button {
         width: 100%;
         height: 60px;
-        background: #007bff;
+        background: gray;
         color: white;
         text-align: center;
         line-height: 60px;
@@ -63,11 +69,11 @@
 
   <body translate="no">
     <header>
-      <h1>sticky</h1>
+      <h1>sticky_button_display_on_all_input</h1>
       <nav>
         <a href="sticky.html">sticky</a> |
         <a href="sticky_button_display_on_all_input.html"
-          >sticky_button_display_on_all_input</a
+          >sticky button display on all input</a
         >
       </nav>
     </header>
@@ -112,4 +118,27 @@
       <p>Footer</p>
     </div>
   </body>
+
+  <script>
+    const stickeyWrapper = document.querySelector(".sticky-wrapper");
+
+    const toggleSticky = (on) => {
+      if (on) {
+        stickeyWrapper.classList.add("sticky-on");
+      } else {
+        stickeyWrapper.classList.remove("sticky-on");
+      }
+    };
+    toggleSticky(false);
+
+    document.querySelectorAll("input, textarea, select").forEach((input) => {
+      input.addEventListener("input", () => {
+        const allFilled = Array.from(
+          document.querySelectorAll("input, textarea, select")
+        ).every((input) => input.value.trim().length > 2);
+
+        toggleSticky(allFilled);
+      });
+    });
+  </script>
 </html>
